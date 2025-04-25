@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bangladesh Efootball Association</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- React and ReactDOM CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+  <!-- Babel for JSX -->
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.20.6/babel.min.js"></script>
+  <!-- GSAP for Animations -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      background: linear-gradient(180deg, #0a0a23 0%, #1a1a3a 100%);
+      font-family: 'Montserrat', sans-serif;
+      color: #ffffff;
+    }
+    .neon-glow {
+      text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc, 0 0 15px #cc00ff;
+    }
+    .button-3d {
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 15px rgba(0, 255, 204, 0.4);
+    }
+    .button-3d:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0, 255, 204, 0.6);
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .hamburger div {
+      width: 30px;
+      height: 4px;
+      background: #00ffcc;
+      margin: 5px 0;
+      transition: all 0.3s;
+    }
+    .dropdown-menu {
+      background: rgba(10, 10, 35, 0.9);
+      backdrop-filter: blur(5px);
+      border: 1px solid #00ffcc;
+    }
+    .form-input {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid #00ffcc;
+      color: #ffffff;
+      transition: border-color 0.3s;
+    }
+    .form-input:focus {
+      border-color: #cc00ff;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    // Mock Data
+    const mockData = {
+      players: [
+        { id: 1, name: "Rakib Hasan", playerId: "RH001", club: "Dhaka Dynamos", goals: 15, matches: 20, motm: 3, position: "Forward", achievements: ["Top Scorer 2024"] },
+        { id: 2, name: "Sabbir Khan", playerId: "SK002", club: "Chittagong Strikers", goals: 10, matches: 18, motm: 2, position: "Midfielder", achievements: ["Best Playmaker 2024"] },
+      ],
+      clubs: [
+        { id: 1, name: "Dhaka Dynamos", manager: "Asif Rahman", managerEmail: "asif@example.com", captain: "Rakib Hasan", wins: 12, stage: "Apex", rewards: ["Gold Badge"], players: [1], logo: "https://via.placeholder.com/150?text=DhakaDynamos", color: "#00ffcc" },
+        { id: 2, name: "Chittagong Strikers", manager: "Karim Mia", managerEmail: "karim@example.com", captain: "Sabbir Khan", wins: 8, stage: "Elite", rewards: ["Silver Badge"], players: [2], logo: "https://via.placeholder.com/150?text=ChittagongStrikers", color: "#cc00ff" },
+      ],
+      tournaments: [
+        { id: 1, name: "BEFA Summer Cup", type: "Team-Up", winner: "Dhaka Dynamos", motm: "Rakib Hasan" },
+        { id: 2, name: "BEFA Solo Showdown", type: "Solo", winner: "Sabbir Khan", motm: "Sabbir Khan" },
+      ],
+      transfers: [
+        { id: 1, player: "Rakib Hasan", fromClub: "Chittagong Strikers", toClub: "Dhaka Dynamos", status: "Done Deal" },
+      ],
+      news: [
+        { id: 1, title: "Fahim Bin Habib Shines with 50 Wins", content: "Fahim has reached an impressive milestone of 50 match wins in the ongoing eFootball tournament.", date: "2025-04-01" },
+      ],
+    };
+
+    // Player Profile Component
+    function PlayerProfile({ player }) {
+      const generateICard = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = 300;
+        canvas.height = 200;
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#0a0a23";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#00ffcc";
+        ctx.font = "bold 20px Orbitron";
+        ctx.fillText(player.name, 20, 40);
+        ctx.font = "16px Montserrat";
+        ctx.fillText(`Club: ${player.club}`, 20, 80);
+        ctx.fillText(`Position: ${player.position}`, 20, 110);
+        ctx.fillText(`Goals: ${player.goals}`, 20, 140);
+        const link = document.createElement("a");
+        link.href = canvas.toDataURL("image/png");
+        link.download = `${player.name}-icard.png`;
+        link.click();
+      };
+
+      return (
+        <div className="glass-card p-6 rounded-lg text-center transform hover:scale-105 transition-transform">
+          <img src="https://via.placeholder.com/100" alt={player.name} className="mx-auto rounded-full mb-4" />
+          <h3 className="text-xl font-bold neon-glow">{player.name}</h
